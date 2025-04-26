@@ -14,4 +14,7 @@ tableau.extensions.initializeDialogAsync().then(() => {
     option.textContent = ws.name;
     dropdown.appendChild(option);
   });
+}).catch(err => {
+  console.error('Error initializing configure dialog:', err.message);
 });
+
