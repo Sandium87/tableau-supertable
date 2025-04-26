@@ -14,7 +14,6 @@
     </icon>
     <permissions>
       <permission>full data</permission>
-	  <permission>interactive</permission>
     </permissions>
   </dashboard-extension>
   <resources>
