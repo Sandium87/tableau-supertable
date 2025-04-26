@@ -2,11 +2,11 @@ function saveSettings() {
   const selectedSheet = document.getElementById('worksheetDropdown').value;
   tableau.extensions.settings.set("worksheet", selectedSheet);
   tableau.extensions.settings.saveAsync().then(() => {
-    tableau.extensions.ui.closeDialog(selectedSheet);
+    window.top.location.reload(); // Reload parent after saving
   });
 }
 
-tableau.extensions.initializeDialogAsync().then(() => {
+tableau.extensions.initializeAsync().then(() => {
   const dropdown = document.getElementById('worksheetDropdown');
   tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
     const option = document.createElement('option');
@@ -14,7 +14,6 @@ tableau.extensions.initializeDialogAsync().then(() => {
     option.textContent = ws.name;
     dropdown.appendChild(option);
   });
-}).catch(err => {
-  console.error('Error initializing configure dialog:', err.message);
+}).catch(error => {
+  console.error('Error initializing configure iframe:', error.message);
 });
-
