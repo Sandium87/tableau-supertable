@@ -21,7 +21,7 @@ function saveConfiguration() {
   const selectedSheet = document.getElementById('configureDropdown').value;
   tableau.extensions.settings.set("worksheet", selectedSheet);
   tableau.extensions.settings.saveAsync().then(() => {
-    location.reload(); // Reload extension after saving config
+    window.location.reload(); // Reload extension to pick new configuration
   });
 }
 
