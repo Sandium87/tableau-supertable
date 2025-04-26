@@ -111,11 +111,19 @@ function deleteRow() {
   }
 }
 
-// 🛠 Initialize Extension
-tableau.extensions.initializeAsync().then(() => {
-  console.log('Extension Initialized');
+async function waitForWorksheets() {
+  while (true) {
+    const ws = tableau.extensions.dashboardContent.dashboard.worksheets;
+    if (ws.length > 0) {
+      return ws;
+    }
+    await new Promise(resolve => setTimeout(resolve, 500)); // wait 0.5 second
+  }
+}
 
-  const allWs = tableau.extensions.dashboardContent.dashboard.worksheets;
+tableau.extensions.initializeAsync().then(async () => {
+  console.log('Extension Initialized');
+  const allWs = await waitForWorksheets();
   console.log('Worksheets found:', allWs.length);
 
   selectedWorksheetName = tableau.extensions.settings.get("worksheet");
@@ -133,5 +141,6 @@ tableau.extensions.initializeAsync().then(() => {
 
   showMainControls();
 });
+
 
 
