@@ -1,0 +1,10 @@
+{
+  "name": "Magic Table by ScatterPie",
+  "description": "Editable Data Table",
+  "scripts": ["script.js"],
+  "version": "1.0.0",
+  "tableau": {
+    "min-api-version": "1.4",
+    "extension-type": "dashboard"
+  }
+}

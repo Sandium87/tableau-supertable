@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Magic Table by ScatterPie</title>
+  <script src="https://tableau.github.io/extensions-api/lib/tableau.extensions.1.latest.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/handsontable@13.0.0/dist/handsontable.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/handsontable@13.0.0/dist/handsontable.min.js"></script>
+  <script src="script.js" defer></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    #controls { padding: 10px; background: #f8f9fa; border-bottom: 1px solid #ddd; }
+    #controls select, #controls button {
+      margin-right: 10px;
+      padding: 5px 10px;
+      font-size: 14px;
+    }
+    #hot { width: 100%; height: 85vh; margin: 10px; }
+    #configureFrame { width: 100%; height: 90vh; display: none; }
+    #configIframe { width: 100%; height: 90vh; border: none; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <button onclick="showConfigure()">Configure</button>
+    <select id="worksheetSelect"></select>
+    <button onclick="loadWorksheet()">Load</button>
+    <button onclick="exportCSV()">Export to CSV</button>
+    <button onclick="addRow()">Add Row</button>
+    <button onclick="deleteRow()">Delete Row</button>
+  </div>
+
+  <!-- Handsontable Container -->
+  <div id="hot">Loading...</div>
+
+  <!-- Configure iframe (hidden initially) -->
+  <div id="configureFrame">
+    <iframe id="configIframe" src="https://127.0.0.1:8888/configure.html"></iframe>
+  </div>
+</body>
+</html>

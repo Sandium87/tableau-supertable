@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest manifest-version="0.1" xmlns="http://www.tableau.com/xml/extension_manifest">
+  <dashboard-extension id="com.scatterpie.magictable" extension-version="1.0.0">
+    <default-locale>en_US</default-locale>
+    <name resource-id="name"/>
+    <description>Magic Table by ScatterPie</description>
+    <author name="Sandip Sharma" email="skumar@scatterpie.io" organization="ScatterPie Analytics Private Limited" website="https://127.0.0.1:8888/"/>
+    <min-api-version>1.9</min-api-version>
+    <source-location>
+      <url>https://127.0.0.1:8888/index.html</url>
+    </source-location>
+    <icon>
+      iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGAAAAAEAAEj8y1bAAAAAElFTkSuQmCC
+    </icon>
+    <permissions>
+      <permission>full data</permission>
+	  <permission>interactive</permission>
+    </permissions>
+  </dashboard-extension>
+  <resources>
+    <resource id="name">
+      <text locale="en_US">Magic Table by ScatterPie</text>
+    </resource>
+  </resources>
+</manifest>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Configure Magic Table</title>
+  <script src="https://tableau.github.io/extensions-api/lib/tableau.extensions.1.latest.js"></script>
+  <script src="configure.js" defer></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    select, button { width: 100%; padding: 10px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Configure Magic Table</h2>
+  <label for="worksheetDropdown">Select Worksheet:</label>
+  <select id="worksheetDropdown"></select>
+  <button onclick="saveSettings()">Save</button>
+</body>
+</html>
