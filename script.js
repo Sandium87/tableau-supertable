@@ -113,10 +113,15 @@ function deleteRow() {
 
 // 🛠 Initialize Extension
 tableau.extensions.initializeAsync().then(() => {
+  console.log('Extension Initialized');
+
+  const allWs = tableau.extensions.dashboardContent.dashboard.worksheets;
+  console.log('Worksheets found:', allWs.length);
+
   selectedWorksheetName = tableau.extensions.settings.get("worksheet");
 
   const select = document.getElementById('worksheetSelect');
-  tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
+  allWs.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
@@ -128,4 +133,5 @@ tableau.extensions.initializeAsync().then(() => {
 
   showMainControls();
 });
+
 
