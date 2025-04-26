@@ -16,11 +16,21 @@
       font-size: 14px;
     }
     #hot { width: 100%; height: 85vh; margin: 10px; }
-    #configureFrame { width: 100%; height: 90vh; display: none; }
-    #configIframe { width: 100%; height: 90vh; border: none; }
+    #configurePanel {
+      display: none;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    #configurePanel select, #configurePanel button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Top Control Panel -->
   <div id="controls">
     <button onclick="showConfigure()">Configure</button>
     <select id="worksheetSelect"></select>
@@ -30,12 +40,16 @@
     <button onclick="deleteRow()">Delete Row</button>
   </div>
 
-  <!-- Handsontable Container -->
+  <!-- Handsontable Table -->
   <div id="hot">Loading...</div>
 
-  <!-- Configure iframe (hidden initially) -->
-  <div id="configureFrame">
-    <iframe id="configIframe" src="https://sandium87.github.io/tableau-supertable/configure.html"></iframe>
+  <!-- Configure Panel (hidden initially) -->
+  <div id="configurePanel">
+    <h2>Configure Worksheet</h2>
+    <label for="configureDropdown">Select Worksheet:</label>
+    <select id="configureDropdown"></select>
+    <button onclick="saveConfiguration()">Save</button>
   </div>
+
 </body>
 </html>

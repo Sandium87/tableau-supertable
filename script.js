@@ -4,7 +4,25 @@ let selectedWorksheetName = '';
 function showConfigure() {
   document.getElementById('controls').style.display = 'none';
   document.getElementById('hot').style.display = 'none';
-  document.getElementById('configureFrame').style.display = 'block';
+  document.getElementById('configurePanel').style.display = 'block';
+
+  const configureDropdown = document.getElementById('configureDropdown');
+  configureDropdown.innerHTML = '';
+
+  tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
+    const option = document.createElement('option');
+    option.value = ws.name;
+    option.textContent = ws.name;
+    configureDropdown.appendChild(option);
+  });
+}
+
+function saveConfiguration() {
+  const selectedSheet = document.getElementById('configureDropdown').value;
+  tableau.extensions.settings.set("worksheet", selectedSheet);
+  tableau.extensions.settings.saveAsync().then(() => {
+    location.reload(); // Reload extension after saving config
+  });
 }
 
 function loadWorksheet() {
@@ -67,8 +85,8 @@ function deleteRow() {
 
 tableau.extensions.initializeAsync().then(() => {
   selectedWorksheetName = tableau.extensions.settings.get("worksheet");
-  const select = document.getElementById('worksheetSelect');
 
+  const select = document.getElementById('worksheetSelect');
   tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
