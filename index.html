@@ -8,44 +8,91 @@
   <script src="https://cdn.jsdelivr.net/npm/handsontable@13.0.0/dist/handsontable.min.js"></script>
   <script src="script.js" defer></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f7fa; }
-    #controls, #configurePanel, #messagePanel { padding: 20px; background: white; margin: 10px; border-radius: 8px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); }
-    #controls select, #controls button, #configurePanel select, #configurePanel button {
-      margin-right: 10px;
-      margin-top: 5px;
-      padding: 10px 12px;
-      font-size: 14px;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 20px;
     }
-    #hot { width: 100%; height: 75vh; margin: 10px; display: none; }
-    #messagePanel { display: none; font-weight: bold; color: green; }
-    .hidden { display: none; }
+    .card {
+      background: white;
+      padding: 20px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+      max-width: 1200px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    #controls, #configurePanel {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    button, select {
+      padding: 10px 16px;
+      font-size: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    select {
+      background-color: white;
+      color: black;
+    }
+    #hot {
+      margin-top: 20px;
+    }
+    #messagePanel {
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: bold;
+      color: green;
+      display: none;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Success / Error Message -->
-  <div id="messagePanel"></div>
+  <div class="card">
+    <h1>Magic Table by ScatterPie</h1>
 
-  <!-- Main Controls -->
-  <div id="controls">
-    <button onclick="showConfigure()">Configure</button>
-    <select id="worksheetSelect"></select>
-    <button onclick="loadWorksheet()">Load</button>
-    <button onclick="exportCSV()">Export to CSV</button>
-    <button onclick="addRow()">Add Row</button>
-    <button onclick="deleteRow()">Delete Row</button>
-  </div>
+    <!-- Success / Error Message -->
+    <div id="messagePanel"></div>
 
-  <!-- Handsontable Table -->
-  <div id="hot">Loading...</div>
+    <!-- Main Controls -->
+    <div id="controls">
+      <button onclick="showConfigure()">Configure</button>
+      <select id="worksheetSelect"></select>
+      <button onclick="loadWorksheet()">Load</button>
+      <button onclick="exportCSV()">Export to CSV</button>
+      <button onclick="addRow()">Add Row</button>
+      <button onclick="deleteRow()">Delete Row</button>
+    </div>
 
-  <!-- Configure Screen -->
-  <div id="configurePanel" class="hidden">
-    <h2>Configure Worksheet</h2>
-    <label for="configureDropdown">Select Worksheet:</label><br>
-    <select id="configureDropdown"></select><br><br>
-    <button onclick="saveConfiguration()">Save</button>
-    <button onclick="cancelConfigure()">Back</button>
+    <!-- Configure Screen -->
+    <div id="configurePanel" class="hidden">
+      <select id="configureDropdown"></select>
+      <button onclick="saveConfiguration()">Save</button>
+      <button onclick="cancelConfigure()">Back</button>
+    </div>
+
+    <!-- Handsontable Table -->
+    <div id="hot">Loading table...</div>
+
   </div>
 
 </body>

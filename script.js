@@ -22,17 +22,17 @@ function saveConfiguration() {
   tableau.extensions.settings.set("worksheet", selectedSheet);
   tableau.extensions.settings.saveAsync().then(() => {
     showMessage("Configuration Saved Successfully!");
-    window.location.reload(); // Reload full extension
+    setTimeout(() => window.location.reload(), 1000); 
   });
 }
 
 function cancelConfigure() {
+  hideAll();
   showMainControls();
 }
 
 function showMainControls() {
-  hideAll();
-  document.getElementById('controls').style.display = 'block';
+  document.getElementById('controls').style.display = 'flex';
   document.getElementById('hot').style.display = 'block';
 }
 
@@ -108,10 +108,9 @@ function deleteRow() {
   }
 }
 
-// INITIALIZE EXTENSION
+// Initialize the Tableau Extension
 tableau.extensions.initializeAsync().then(() => {
   allWorksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
-
   selectedWorksheetName = tableau.extensions.settings.get("worksheet");
 
   const select = document.getElementById('worksheetSelect');
