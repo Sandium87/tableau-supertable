@@ -9,13 +9,15 @@ function showConfigure() {
   const configureDropdown = document.getElementById('configureDropdown');
   configureDropdown.innerHTML = '';
 
-  allWorksheets.forEach(ws => {
+  // 🔥 Fetch worksheets fresh when clicking Configure
+  tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
     configureDropdown.appendChild(option);
   });
 }
+
 
 
 function saveConfiguration() {
@@ -111,12 +113,10 @@ function deleteRow() {
 
 // 🛠 Initialize Extension
 tableau.extensions.initializeAsync().then(() => {
-  allWorksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
-
   selectedWorksheetName = tableau.extensions.settings.get("worksheet");
 
   const select = document.getElementById('worksheetSelect');
-  allWorksheets.forEach(ws => {
+  tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
@@ -127,6 +127,5 @@ tableau.extensions.initializeAsync().then(() => {
   });
 
   showMainControls();
-}).catch((error) => {
-  console.error('Error initializing extension:', error.message);
 });
+
