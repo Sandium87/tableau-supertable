@@ -1,5 +1,4 @@
 let hot;
-let allWorksheets = [];
 let selectedWorksheetName = '';
 
 function showConfigure() {
@@ -9,7 +8,8 @@ function showConfigure() {
   const configureDropdown = document.getElementById('configureDropdown');
   configureDropdown.innerHTML = '';
 
-  allWorksheets.forEach(ws => {
+  // 🛠 Fetch Worksheets LIVE every time you open Configure
+  tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
@@ -22,7 +22,7 @@ function saveConfiguration() {
   tableau.extensions.settings.set("worksheet", selectedSheet);
   tableau.extensions.settings.saveAsync().then(() => {
     showMessage("Configuration Saved Successfully!");
-    setTimeout(() => window.location.reload(), 1000); 
+    setTimeout(() => window.location.reload(), 1000); // Small delay before reload
   });
 }
 
@@ -57,7 +57,7 @@ function loadWorksheet() {
     return;
   }
 
-  const worksheet = allWorksheets.find(ws => ws.name === selectedSheetName);
+  const worksheet = tableau.extensions.dashboardContent.dashboard.worksheets.find(ws => ws.name === selectedSheetName);
 
   worksheet.getSummaryDataAsync().then((dataTable) => {
     const cols = dataTable.columns.map(col => col.fieldName);
@@ -108,13 +108,12 @@ function deleteRow() {
   }
 }
 
-// Initialize the Tableau Extension
+// 🛠 Initialize Extension
 tableau.extensions.initializeAsync().then(() => {
-  allWorksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
   selectedWorksheetName = tableau.extensions.settings.get("worksheet");
 
   const select = document.getElementById('worksheetSelect');
-  allWorksheets.forEach(ws => {
+  tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
