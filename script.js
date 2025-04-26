@@ -1,5 +1,4 @@
 let hot;
-let allWorksheets = [];
 let selectedWorksheetName = '';
 
 function showConfigure() {
@@ -9,8 +8,11 @@ function showConfigure() {
   const configureDropdown = document.getElementById('configureDropdown');
   configureDropdown.innerHTML = '';
 
-  // 🔥 Fetch worksheets fresh when clicking Configure
-  tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
+  // Fetch Worksheets LIVE every time you open Configure
+  const worksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
+  alert('At Configure click: Worksheets found = ' + worksheets.length);
+
+  worksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
@@ -18,14 +20,12 @@ function showConfigure() {
   });
 }
 
-
-
 function saveConfiguration() {
   const selectedSheet = document.getElementById('configureDropdown').value;
   tableau.extensions.settings.set("worksheet", selectedSheet);
   tableau.extensions.settings.saveAsync().then(() => {
     showMessage("Configuration Saved Successfully!");
-    setTimeout(() => window.location.reload(), 1000); // Small delay before reload
+    setTimeout(() => window.location.reload(), 1000); 
   });
 }
 
@@ -111,25 +111,15 @@ function deleteRow() {
   }
 }
 
-async function waitForWorksheets() {
-  while (true) {
-    const ws = tableau.extensions.dashboardContent.dashboard.worksheets;
-    if (ws.length > 0) {
-      return ws;
-    }
-    await new Promise(resolve => setTimeout(resolve, 500)); // wait 0.5 second
-  }
-}
-
-tableau.extensions.initializeAsync().then(async () => {
-  console.log('Extension Initialized');
-  const allWs = await waitForWorksheets();
-  console.log('Worksheets found:', allWs.length);
+// Initialize Extension
+tableau.extensions.initializeAsync().then(() => {
+  const worksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
+  alert('On Initialization: Worksheets found = ' + worksheets.length);
 
   selectedWorksheetName = tableau.extensions.settings.get("worksheet");
 
   const select = document.getElementById('worksheetSelect');
-  allWs.forEach(ws => {
+  worksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
@@ -140,7 +130,6 @@ tableau.extensions.initializeAsync().then(async () => {
   });
 
   showMainControls();
+}).catch((error) => {
+  console.error('Error initializing extension:', error.message);
 });
-
-
-
