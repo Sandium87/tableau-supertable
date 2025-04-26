@@ -8,29 +8,25 @@
   <script src="https://cdn.jsdelivr.net/npm/handsontable@13.0.0/dist/handsontable.min.js"></script>
   <script src="script.js" defer></script>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
-    #controls { padding: 10px; background: #f8f9fa; border-bottom: 1px solid #ddd; }
-    #controls select, #controls button {
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f7fa; }
+    #controls, #configurePanel, #messagePanel { padding: 20px; background: white; margin: 10px; border-radius: 8px; box-shadow: 0px 2px 8px rgba(0,0,0,0.1); }
+    #controls select, #controls button, #configurePanel select, #configurePanel button {
       margin-right: 10px;
-      padding: 5px 10px;
+      margin-top: 5px;
+      padding: 10px 12px;
       font-size: 14px;
     }
-    #hot { width: 100%; height: 85vh; margin: 10px; }
-    #configurePanel {
-      display: none;
-      padding: 20px;
-      background-color: #f9f9f9;
-    }
-    #configurePanel select, #configurePanel button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-    }
+    #hot { width: 100%; height: 75vh; margin: 10px; display: none; }
+    #messagePanel { display: none; font-weight: bold; color: green; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
 
-  <!-- Top Control Panel -->
+  <!-- Success / Error Message -->
+  <div id="messagePanel"></div>
+
+  <!-- Main Controls -->
   <div id="controls">
     <button onclick="showConfigure()">Configure</button>
     <select id="worksheetSelect"></select>
@@ -43,12 +39,13 @@
   <!-- Handsontable Table -->
   <div id="hot">Loading...</div>
 
-  <!-- Configure Panel (hidden initially) -->
-  <div id="configurePanel">
+  <!-- Configure Screen -->
+  <div id="configurePanel" class="hidden">
     <h2>Configure Worksheet</h2>
-    <label for="configureDropdown">Select Worksheet:</label>
-    <select id="configureDropdown"></select>
+    <label for="configureDropdown">Select Worksheet:</label><br>
+    <select id="configureDropdown"></select><br><br>
     <button onclick="saveConfiguration()">Save</button>
+    <button onclick="cancelConfigure()">Back</button>
   </div>
 
 </body>

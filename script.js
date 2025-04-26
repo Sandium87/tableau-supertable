@@ -2,9 +2,8 @@ let hot;
 let selectedWorksheetName = '';
 
 function showConfigure() {
-  document.getElementById('controls').style.display = 'none';
-  document.getElementById('hot').style.display = 'none';
-  document.getElementById('configurePanel').style.display = 'block';
+  hideAll();
+  document.getElementById('configurePanel').classList.remove('hidden');
 
   const configureDropdown = document.getElementById('configureDropdown');
   configureDropdown.innerHTML = '';
@@ -21,8 +20,33 @@ function saveConfiguration() {
   const selectedSheet = document.getElementById('configureDropdown').value;
   tableau.extensions.settings.set("worksheet", selectedSheet);
   tableau.extensions.settings.saveAsync().then(() => {
-    window.location.reload(); // Reload extension to pick new configuration
+    showMessage("Configuration Saved Successfully!");
+    showMainControls();
   });
+}
+
+function cancelConfigure() {
+  showMainControls();
+}
+
+function showMainControls() {
+  hideAll();
+  document.getElementById('controls').style.display = 'block';
+  document.getElementById('hot').style.display = 'block';
+}
+
+function hideAll() {
+  document.getElementById('controls').style.display = 'none';
+  document.getElementById('hot').style.display = 'none';
+  document.getElementById('configurePanel').classList.add('hidden');
+  document.getElementById('messagePanel').style.display = 'none';
+}
+
+function showMessage(msg) {
+  const panel = document.getElementById('messagePanel');
+  panel.innerHTML = msg;
+  panel.style.display = 'block';
+  setTimeout(() => { panel.style.display = 'none'; }, 3000);
 }
 
 function loadWorksheet() {
@@ -96,6 +120,8 @@ tableau.extensions.initializeAsync().then(() => {
     }
     select.appendChild(option);
   });
+
+  showMainControls();
 }).catch((error) => {
   console.error('Error initializing extension:', error.message);
 });
