@@ -1,4 +1,5 @@
 let hot;
+let allWorksheets = [];
 let selectedWorksheetName = '';
 
 function showConfigure() {
@@ -8,14 +9,14 @@ function showConfigure() {
   const configureDropdown = document.getElementById('configureDropdown');
   configureDropdown.innerHTML = '';
 
-  // 🛠 Fetch Worksheets LIVE every time you open Configure
-  tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
+  allWorksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
     configureDropdown.appendChild(option);
   });
 }
+
 
 function saveConfiguration() {
   const selectedSheet = document.getElementById('configureDropdown').value;
@@ -110,10 +111,12 @@ function deleteRow() {
 
 // 🛠 Initialize Extension
 tableau.extensions.initializeAsync().then(() => {
+  allWorksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
+
   selectedWorksheetName = tableau.extensions.settings.get("worksheet");
 
   const select = document.getElementById('worksheetSelect');
-  tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
+  allWorksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
