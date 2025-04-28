@@ -9,14 +9,14 @@ function showConfigure() {
   const configureDropdown = document.getElementById('configureDropdown');
   configureDropdown.innerHTML = '';
 
-  // Use global allWorksheets
-  allWorksheets.forEach(ws => {
+  tableau.extensions.dashboardContent.dashboard.worksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
     configureDropdown.appendChild(option);
   });
 }
+
 
 function saveConfiguration() {
   const selectedSheet = document.getElementById('configureDropdown').value;
