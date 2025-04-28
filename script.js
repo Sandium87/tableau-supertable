@@ -1,4 +1,5 @@
 let hot;
+let allWorksheets = [];
 let selectedWorksheetName = '';
 
 function showConfigure() {
@@ -8,11 +9,8 @@ function showConfigure() {
   const configureDropdown = document.getElementById('configureDropdown');
   configureDropdown.innerHTML = '';
 
-  // Fetch Worksheets LIVE every time you open Configure
-  const worksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
-  alert('At Configure click: Worksheets found = ' + worksheets.length);
-
-  worksheets.forEach(ws => {
+  // Use global allWorksheets
+  allWorksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
@@ -25,7 +23,7 @@ function saveConfiguration() {
   tableau.extensions.settings.set("worksheet", selectedSheet);
   tableau.extensions.settings.saveAsync().then(() => {
     showMessage("Configuration Saved Successfully!");
-    setTimeout(() => window.location.reload(), 1000); 
+    setTimeout(() => window.location.reload(), 1000);
   });
 }
 
@@ -60,7 +58,7 @@ function loadWorksheet() {
     return;
   }
 
-  const worksheet = tableau.extensions.dashboardContent.dashboard.worksheets.find(ws => ws.name === selectedSheetName);
+  const worksheet = allWorksheets.find(ws => ws.name === selectedSheetName);
 
   worksheet.getSummaryDataAsync().then((dataTable) => {
     const cols = dataTable.columns.map(col => col.fieldName);
@@ -111,15 +109,14 @@ function deleteRow() {
   }
 }
 
-// Initialize Extension
+// Initialize Extension (Tableau 2023 friendly)
 tableau.extensions.initializeAsync().then(() => {
-  const worksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
-  alert('On Initialization: Worksheets found = ' + worksheets.length);
+  allWorksheets = tableau.extensions.dashboardContent.dashboard.worksheets;
 
   selectedWorksheetName = tableau.extensions.settings.get("worksheet");
 
   const select = document.getElementById('worksheetSelect');
-  worksheets.forEach(ws => {
+  allWorksheets.forEach(ws => {
     const option = document.createElement('option');
     option.value = ws.name;
     option.textContent = ws.name;
